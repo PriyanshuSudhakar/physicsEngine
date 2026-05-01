@@ -32,7 +32,9 @@ int main()
    triangle1->setFragmentShaderPath("../Shaders/fragmentShader1.frag");
    triangle1->createShaderProgram();
 
-   Circle* circle = new Circle(0.0f, 0.0f, 0.2f);
+   Circle* circle1 = new Circle(0.0f, 0.0f, 0.2f);
+   Circle* circle2 = new Circle(0.5f, 0.5f, 0.2f);
+   Circle* circle3 = new Circle(-0.5f, -0.5f, 0.2f);
 
    while (!glfwWindowShouldClose(myWindow.getWindow()))
    {
@@ -44,11 +46,13 @@ int main()
       glClear(GL_COLOR_BUFFER_BIT);
 
       // 3. Draw
-      triangle1->useShaderProgram();
-      glBindVertexArray(triangle1->getVAO());
-      triangle1->drawTriangles();
+      // triangle1->useShaderProgram();
+      // glBindVertexArray(triangle1->getVAO());
+      // triangle1->drawTriangles();
 
-      circle->drawCircle();
+      circle1->drawCircle();
+      circle2->drawCircle();
+      circle3->drawCircle();
 
       // 4. Swap Buffers (Show what we just drew)
       glfwSwapBuffers(myWindow.getWindow());
