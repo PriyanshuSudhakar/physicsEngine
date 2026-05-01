@@ -7,6 +7,8 @@
 
 class Circle {
 private:
+    float mass;
+
     float centre_x, centre_y;
     float radii;
 
@@ -19,4 +21,5 @@ private:
 public:
     Circle(float x, float y, float radii);
     void drawCircle();
+    void setMass(float mass);
 };

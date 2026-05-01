@@ -61,3 +61,7 @@ void Triangle::drawTriangles() {
     
     glDrawElements(GL_TRIANGLES, this->triangleCount * 3, GL_UNSIGNED_INT, 0);
 }
+
+void Triangle::setMass(float mass) {
+    this->mass = mass;
+}

@@ -7,6 +7,8 @@
 
 class Triangle {
 private:
+    float mass;
+
     float* vertices;
     unsigned int* indices;
     int triangleCount;
@@ -25,4 +27,5 @@ public:
     unsigned int getVBO();
     unsigned int getEBO();
     void drawTriangles();
+    void setMass(float mass);
 };

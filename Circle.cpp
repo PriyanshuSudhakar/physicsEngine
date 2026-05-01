@@ -39,3 +39,7 @@ void Circle::drawCircle() {
     triangles->useShaderProgram();
     triangles->drawTriangles();
 }
+
+void Circle::setMass(float mass) {
+    this->mass = mass;
+}
