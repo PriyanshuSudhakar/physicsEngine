@@ -17,6 +17,8 @@ add_executable(
     Libs/Triangle.h
     Shader.cpp
     Libs/Shader.h
+    Circle.cpp 
+    Libs/Circle.h
 )
 
 # 2. Now tell CMake where to find the headers for 'app'

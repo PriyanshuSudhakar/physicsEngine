@@ -1,3 +1,5 @@
+#pragma once
+
 #include <GL/glew.h>
 #include <vector>
 #include <iostream>
@@ -22,4 +24,5 @@ public:
     unsigned int getVAO();
     unsigned int getVBO();
     unsigned int getEBO();
+    void drawTriangles();
 };
