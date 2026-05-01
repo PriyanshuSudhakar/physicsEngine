@@ -1,0 +1,9 @@
+build/
+bin/
+out/
+.vscode/
+*.obj
+*.exe
+*.pdb
+*.sln
+*.vcxproj
