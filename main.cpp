@@ -5,6 +5,7 @@
 
 #include "Libs/Window.h"
 #include "Libs/Triangle.h"
+#include "Libs/Circle.h"
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
@@ -29,8 +30,9 @@ int main()
    Triangle *triangle1 = new Triangle(vertices, indices);
    triangle1->setVertexShaderPath("../Shaders/vertexShader1.vert");
    triangle1->setFragmentShaderPath("../Shaders/fragmentShader1.frag");
-
    triangle1->createShaderProgram();
+
+   Circle* circle = new Circle(0.0f, 0.0f, 0.2f);
 
    while (!glfwWindowShouldClose(myWindow.getWindow()))
    {
@@ -44,7 +46,9 @@ int main()
       // 3. Draw
       triangle1->useShaderProgram();
       glBindVertexArray(triangle1->getVAO());
-      glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+      triangle1->drawTriangles();
+
+      circle->drawCircle();
 
       // 4. Swap Buffers (Show what we just drew)
       glfwSwapBuffers(myWindow.getWindow());

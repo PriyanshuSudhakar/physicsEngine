@@ -5,6 +5,8 @@ Triangle::Triangle(std::vector<float>& vertices, std::vector<unsigned int>& indi
     this->vertices = new float[vertices.size()];
     this->indices = new unsigned int[indices.size()];
 
+    this->triangleCount = indices.size();
+
     std::copy(vertices.begin(), vertices.end(), this->vertices);
     std::copy(indices.begin(), indices.end(), this->indices);
 
@@ -54,3 +56,8 @@ unsigned int Triangle::getEBO() {
 unsigned int Triangle::getVBO() {
     return this->VBO;
 } 
+
+void Triangle::drawTriangles() {
+    
+    glDrawElements(GL_TRIANGLES, this->triangleCount * 3, GL_UNSIGNED_INT, 0);
+}
