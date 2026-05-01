@@ -8,14 +8,14 @@ Circle::Circle(float x, float y, float radii) {
     // Fill the vertices and indices
     int trianglesNeeded = ceil((2*M_PI) / this->angle);
 
-    std::vector<float> vertices = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    std::vector<float> vertices = {x, y, 0.0f, x, y, 0.0f};
     for(int i=0;i<=trianglesNeeded;i++) {
-        vertices.push_back(this->radii*glm::sin(i * this->angle));
-        vertices.push_back(this->radii*glm::cos(i * this->angle));
+        vertices.push_back(x + this->radii*glm::sin(i * this->angle));
+        vertices.push_back(y + this->radii*glm::cos(i * this->angle));
         vertices.push_back(0.0f);
 
-        vertices.push_back(glm::sin(i * this->angle));
-        vertices.push_back(glm::cos(i * this->angle));
+        vertices.push_back(x + glm::sin(i * this->angle));
+        vertices.push_back(y + glm::cos(i * this->angle));
         vertices.push_back(0.0f);
     }
 
