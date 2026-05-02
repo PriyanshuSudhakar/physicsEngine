@@ -19,6 +19,10 @@ add_executable(
     Libs/Shader.h
     Circle.cpp 
     Libs/Circle.h
+    Gravity.cpp
+    Libs/Gravity.h
+    Clock.cpp 
+    Libs/Clock.h
 )
 
 # 2. Now tell CMake where to find the headers for 'app'

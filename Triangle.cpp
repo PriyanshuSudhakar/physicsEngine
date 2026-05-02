@@ -31,6 +31,9 @@ Triangle::Triangle(std::vector<float>& vertices, std::vector<unsigned int>& indi
 
 void Triangle::createShaderProgram() {
     this->shaderProgram = new Shader(this->vertexShaderPath, this->fragmentShaderPath);
+    this->objectID = this->shaderProgram->getShaderProgram();
+
+    std::cout<<"[INFO] Triangle object created with objectID: "<<this->objectID<<std::endl;
 }
 
 void Triangle::useShaderProgram() {
@@ -58,10 +61,13 @@ unsigned int Triangle::getVBO() {
 } 
 
 void Triangle::drawTriangles() {
-    
-    glDrawElements(GL_TRIANGLES, this->triangleCount * 3, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, this->triangleCount, GL_UNSIGNED_INT, 0);
 }
 
 void Triangle::setMass(float mass) {
     this->mass = mass;
+}
+
+unsigned int Triangle::getObjectID() {
+    return this->objectID;
 }
