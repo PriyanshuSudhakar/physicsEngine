@@ -6,9 +6,10 @@
 #include "Libs/Window.h"
 #include "Libs/Triangle.h"
 #include "Libs/Circle.h"
+#include "Libs/Gravity.h"
 
 const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+const int WINDOW_HEIGHT = 800;
 const char *WINDOW_NAME = "myWindow";
 
 std::vector<float> vertices = {
@@ -21,43 +22,61 @@ std::vector<unsigned int> indices = {
 
 int main()
 {
-   Window myWindow = Window(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
+    Window myWindow = Window(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
 
-   glewInit();
+    glewInit();
 
-   glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    //    glDisable(GL_CULL_FACE);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_MULTISAMPLE);
 
-   Triangle *triangle1 = new Triangle(vertices, indices);
-   triangle1->setVertexShaderPath("../Shaders/vertexShader1.vert");
-   triangle1->setFragmentShaderPath("../Shaders/fragmentShader1.frag");
-   triangle1->createShaderProgram();
+    Triangle *triangle1 = new Triangle(vertices, indices);
+    triangle1->setVertexShaderPath("../Shaders/vertexShader1.vert");
+    triangle1->setFragmentShaderPath("../Shaders/fragmentShader1.frag");
+    triangle1->createShaderProgram();
 
-   Circle* circle1 = new Circle(0.0f, 0.0f, 0.2f);
-   Circle* circle2 = new Circle(0.5f, 0.5f, 0.2f);
-   Circle* circle3 = new Circle(-0.5f, -0.5f, 0.2f);
+    int samples;
+    glGetIntegerv(GL_SAMPLES, &samples);
+    std::cout << "Actual MSAA samples: " << samples << std::endl;
 
-   while (!glfwWindowShouldClose(myWindow.getWindow()))
-   {
-      // 1. Process Events
-      glfwPollEvents();
+    Circle *circle1 = new Circle(0.0f, 0.0f, 0.2f, 0.1f);
+    Circle *circle2 = new Circle(0.5f, 0.5f, 0.2f, 0.1f);
+    Circle *circle3 = new Circle(-0.5f, -0.5f, 0.2f, 0.1f);
 
-      // 2. Clear (The background color)
-      glClearColor(0.3f, 0.5f, 0.6f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT);
+    Gravity gravity;
+    gravity.addObject(circle1);
+    gravity.addObject(circle2);
+    gravity.addObject(circle3);
 
-      // 3. Draw
-      // triangle1->useShaderProgram();
-      // glBindVertexArray(triangle1->getVAO());
-      // triangle1->drawTriangles();
+    while (!glfwWindowShouldClose(myWindow.getWindow()))
+    {
+        // 1. Process Events
+        glfwPollEvents();
 
-      circle1->drawCircle();
-      circle2->drawCircle();
-      circle3->drawCircle();
+        // 2. Clear (The background color)
+        glClearColor(0.3f, 0.5f, 0.6f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-      // 4. Swap Buffers (Show what we just drew)
-      glfwSwapBuffers(myWindow.getWindow());
-   }
+        //   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-   glfwTerminate();
-   return 0;
+        // 3. Draw
+        // triangle1->useShaderProgram();
+        // glBindVertexArray(triangle1->getVAO());
+        // triangle1->drawTriangles();
+
+        // gravity.gravity();
+
+        circle1->drawCircle();
+        circle2->drawCircle();
+        circle3->drawCircle();
+
+        gravity.gravity();
+
+        // 4. Swap Buffers (Show what we just drew)
+        glfwSwapBuffers(myWindow.getWindow());
+    }
+
+    glfwTerminate();
+    return 0;
 }

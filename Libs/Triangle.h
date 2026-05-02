@@ -17,6 +17,8 @@ private:
 
     unsigned int VAO, VBO, EBO;
     Shader* shaderProgram;
+
+    unsigned int objectID;
 public:
     Triangle(std::vector<float>& vertices, std::vector<unsigned int>& indices);
     void setVertexShaderPath(std::string vertexShaderPath);
@@ -28,4 +30,5 @@ public:
     unsigned int getEBO();
     void drawTriangles();
     void setMass(float mass);
+    unsigned int getObjectID();
 };
