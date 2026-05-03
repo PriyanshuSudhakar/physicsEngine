@@ -23,6 +23,9 @@ add_executable(
     Libs/Gravity.h
     Clock.cpp 
     Libs/Clock.h
+    Libs/Object.h
+    Collision.cpp 
+    Libs/Collision.h
 )
 
 # 2. Now tell CMake where to find the headers for 'app'
