@@ -30,4 +30,5 @@ public:
     void updateVelocity(glm::vec2 velocity);
     glm::vec2 getPosition();
     void updatePosition(glm::vec2 position);
+    void updateInWorldPosition(glm::vec2 currentPosition) override;
 };

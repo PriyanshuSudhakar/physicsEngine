@@ -102,9 +102,21 @@ glm::vec2 Circle::getPosition()
 void Circle::updatePosition(glm::vec2 position)
 {
     this->currPosition = position;
+    updateInWorldPosition(position);
 }
 
-void Circle::draw() 
+void Circle::draw()
 {
     drawCircle(); // just delegate to your existing function for now
+}
+
+void Circle::updateInWorldPosition(glm::vec2 currentPosition)
+{
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::translate(trans, glm::vec3(currPosition.x, currPosition.y, 0.0f));
+    unsigned int transformLoc = glGetUniformLocation(this->objectID, "translate");
+    // std::cout << "[DEBUG] transformLoc for object " << object << ": " << transformLoc << std::endl;
+    glUseProgram(this->objectID);
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+    std::cout << "[DEBUG] OpenGL updated" << std::endl;
 }
