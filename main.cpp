@@ -41,9 +41,9 @@ int main()
     glGetIntegerv(GL_SAMPLES, &samples);
     std::cout << "Actual MSAA samples: " << samples << std::endl;
 
-    Circle *circle1 = new Circle(0.0f, 0.0f, 0.02f, 0.1f);
+    Circle *circle1 = new Circle(0.25f, 0.0f, 0.02f, 0.1f);
     Circle *circle2 = new Circle(0.5f, 0.5f, 0.02f, 0.1f);
-    Circle *circle3 = new Circle(-0.5f, 0.0f, 0.02f, 0.1f);
+    Circle *circle3 = new Circle(0.5f, 0.0f, 0.02f, 0.1f);
 
     Gravity gravity;
     gravity.addObject(circle1);

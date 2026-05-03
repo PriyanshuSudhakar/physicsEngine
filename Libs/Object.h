@@ -2,7 +2,8 @@
 
 #include <glm/glm.hpp>
 
-class Object {
+class Object
+{
 protected:
     float mass;
     glm::vec2 currPosition;
@@ -26,4 +27,8 @@ public:
 
     virtual void updateVelocity(glm::vec2 velocity) { this->velocity = velocity; }
     virtual void updatePosition(glm::vec2 position) { this->currPosition = position; }
+    virtual void updateInWorldPosition(glm::vec2 position)
+    {
+        this->currPosition = position;
+    }
 };
