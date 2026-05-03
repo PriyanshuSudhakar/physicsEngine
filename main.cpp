@@ -41,9 +41,9 @@ int main()
     glGetIntegerv(GL_SAMPLES, &samples);
     std::cout << "Actual MSAA samples: " << samples << std::endl;
 
-    Circle *circle1 = new Circle(0.25f, 0.0f, 0.02f, 0.1f);
-    Circle *circle2 = new Circle(0.5f, 0.5f, 0.02f, 0.1f);
-    Circle *circle3 = new Circle(0.5f, 0.0f, 0.02f, 0.1f);
+    Circle *circle1 = new Circle(0.25f, 0.0f, 0.08f, 0.1f);
+    Circle *circle2 = new Circle(0.5f, 0.5f, 0.08f, 0.1f);
+    Circle *circle3 = new Circle(0.5f, 0.0f, 0.08f, 0.1f);
 
     Gravity gravity;
     gravity.addObject(circle1);
@@ -51,6 +51,9 @@ int main()
     gravity.addObject(circle3);
 
     Collision collision;
+
+    collision.setWallHeight(1);
+    collision.setWallWidth(1);
 
     collision.addNonGhostObjects(circle1, "circle");
     collision.addNonGhostObjects(circle2, "circle");
@@ -81,6 +84,7 @@ int main()
         gravity.gravity();
 
         collision.collisionDetector();
+        collision.wallCollisionDetector();
 
         // 4. Swap Buffers (Show what we just drew)
         glfwSwapBuffers(myWindow.getWindow());
