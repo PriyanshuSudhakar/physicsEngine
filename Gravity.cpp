@@ -31,9 +31,11 @@ void Gravity::gravity()
 {
     for (int currObject = 0; currObject < this->numberOfObjects; currObject++)
     {
-        glm::vec2 force;
-        force.x = 0.0f;
-        force.y = 0.0f;
+        // glm::vec2 force;
+        // force.x = this->forces[currObject].x;
+        // force.y = this->forces[currObject].y;
+        this->forces[currObject].x = 0.0f;
+        this->forces[currObject].y = 0.0f;
 
         for (int object = 0; object < this->numberOfObjects; object++)
         {
@@ -72,24 +74,27 @@ void Gravity::gravity()
             std::cout << "[INFO]: Mass of object2: " << object_mass << std::endl;
 
             // std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            
+            // make it zero if collision detection is turned on
+            float epsilon = 0.5f; // tune this value
 
             // Force is towards object
-            float currForce_x = dir_x * ((currObject_mass * object_mass) / (dist_x * dist_x));
-            float currForce_y = dir_y * ((currObject_mass * object_mass) / (dist_y * dist_y));
+            float currForce_x = dir_x * ((currObject_mass * object_mass) / (dist_x * dist_x + epsilon));
+            float currForce_y = dir_y * ((currObject_mass * object_mass) / (dist_y * dist_y + epsilon));
 
             std::cout << "[INFO]: Horizontal force between the objects are: " << currForce_x << std::endl;
             std::cout << "[INFO]: Vertical forces between the objects are: " << currForce_y << std::endl;
 
-            force.x += currForce_x;
-            force.y += currForce_y;
+            this->forces[currObject].x += currForce_x;
+            this->forces[currObject].y += currForce_y;
 
-            std::cout << "[INFO]: calculated force between the objects are: " << currForce_x << std::endl;
-            std::cout << "[INFO]: calculated force between the objects are: " << currForce_y << std::endl;
+            std::cout << "[INFO]: calculated force between the objects are: " << this->forces[currObject].x << std::endl;
+            std::cout << "[INFO]: calculated force between the objects are: " << this->forces[currObject].y << std::endl;
         }
 
         // update the current force
         std::cout << "[DEBUG:] currObject is " << currObject << std::endl;
-        this->forces[currObject] = force;
+        // this->forces[currObject] = force;
     }
 
     std::cout << "[DEBUG:] Log before update velocity" << std::endl;
@@ -128,7 +133,7 @@ void Gravity::updateVelocity()
         std::cout << "[DEBUG] Matrix built" << std::endl;
 
         unsigned int transformLoc = glGetUniformLocation(this->objects[object]->getObjectID(), "translate");
-        std::cout << "[DEBUG] transformLoc for object " << object << ": " << transformLoc << std::endl;
+        // std::cout << "[DEBUG] transformLoc for object " << object << ": " << transformLoc << std::endl;
         glUseProgram(this->objects[object]->getObjectID());
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
         std::cout << "[DEBUG] OpenGL updated" << std::endl;

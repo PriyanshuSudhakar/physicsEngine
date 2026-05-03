@@ -7,6 +7,7 @@
 #include "Libs/Triangle.h"
 #include "Libs/Circle.h"
 #include "Libs/Gravity.h"
+#include "Libs/Collision.h"
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
@@ -40,14 +41,20 @@ int main()
     glGetIntegerv(GL_SAMPLES, &samples);
     std::cout << "Actual MSAA samples: " << samples << std::endl;
 
-    Circle *circle1 = new Circle(0.0f, 0.0f, 0.2f, 0.1f);
-    Circle *circle2 = new Circle(0.5f, 0.5f, 0.2f, 0.1f);
-    Circle *circle3 = new Circle(-0.5f, -0.5f, 0.2f, 0.1f);
+    Circle *circle1 = new Circle(0.0f, 0.0f, 0.02f, 0.1f);
+    Circle *circle2 = new Circle(0.5f, 0.5f, 0.02f, 0.1f);
+    Circle *circle3 = new Circle(-0.5f, 0.0f, 0.02f, 0.1f);
 
     Gravity gravity;
     gravity.addObject(circle1);
     gravity.addObject(circle2);
     gravity.addObject(circle3);
+
+    Collision collision;
+
+    collision.addNonGhostObjects(circle1, "circle");
+    collision.addNonGhostObjects(circle2, "circle");
+    collision.addNonGhostObjects(circle3, "circle");
 
     while (!glfwWindowShouldClose(myWindow.getWindow()))
     {
@@ -72,6 +79,8 @@ int main()
         circle3->drawCircle();
 
         gravity.gravity();
+
+        collision.collisionDetector();
 
         // 4. Swap Buffers (Show what we just drew)
         glfwSwapBuffers(myWindow.getWindow());

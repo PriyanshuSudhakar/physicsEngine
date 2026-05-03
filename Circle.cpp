@@ -103,3 +103,8 @@ void Circle::updatePosition(glm::vec2 position)
 {
     this->currPosition = position;
 }
+
+void Circle::draw() 
+{
+    drawCircle(); // just delegate to your existing function for now
+}
