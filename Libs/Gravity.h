@@ -10,6 +10,8 @@
 class Gravity {
 private:
     const double G = 6.67408e-11;
+    const double g = 9.8;
+    const double earthMass = 10;
     std::vector<Circle*> objects;
     bool isActive;
     int numberOfObjects;
@@ -20,5 +22,6 @@ public:
     void toggleGravity();
     bool getGravityStatus();
     void gravity();
-    void updateVelocity();    
+    void groundGravity();
+    void updateVelocity();
 };
