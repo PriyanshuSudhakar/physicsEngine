@@ -47,8 +47,8 @@ int main()
 
     Gravity gravity;
     gravity.addObject(circle1);
-    gravity.addObject(circle2);
-    gravity.addObject(circle3);
+    // gravity.addObject(circle2);
+    // gravity.addObject(circle3);
 
     Collision collision;
 
@@ -56,8 +56,8 @@ int main()
     collision.setWallWidth(1);
 
     collision.addNonGhostObjects(circle1, "circle");
-    collision.addNonGhostObjects(circle2, "circle");
-    collision.addNonGhostObjects(circle3, "circle");
+    // collision.addNonGhostObjects(circle2, "circle");
+    // collision.addNonGhostObjects(circle3, "circle");
 
     while (!glfwWindowShouldClose(myWindow.getWindow()))
     {
@@ -78,10 +78,11 @@ int main()
         // gravity.gravity();
 
         circle1->drawCircle();
-        circle2->drawCircle();
-        circle3->drawCircle();
+        // circle2->drawCircle();
+        // circle3->drawCircle();
 
         gravity.gravity();
+        gravity.groundGravity();
 
         collision.collisionDetector();
         collision.wallCollisionDetector();

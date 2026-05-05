@@ -127,15 +127,26 @@ void Gravity::updateVelocity()
         currPosition.y += currVelocity.y * time.getTimeSpeed();
         this->objects[object]->updatePosition(currPosition);
         std::cout << "[DEBUG] Position updated" << std::endl;
-
-        glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::translate(trans, glm::vec3(currPosition.x, currPosition.y, 0.0f));
         std::cout << "[DEBUG] Matrix built" << std::endl;
-
-        unsigned int transformLoc = glGetUniformLocation(this->objects[object]->getObjectID(), "translate");
-        // std::cout << "[DEBUG] transformLoc for object " << object << ": " << transformLoc << std::endl;
-        glUseProgram(this->objects[object]->getObjectID());
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
-        std::cout << "[DEBUG] OpenGL updated" << std::endl;
     }
+}
+
+void Gravity::groundGravity() {
+    float timeSpeed = 0.001f;
+    Clock time = Clock(timeSpeed);
+    std::cout<<"[Info] Number of objects: "<<this->numberOfObjects<<std::endl;
+    for(int object=0;object<this->numberOfObjects;object++) {
+        // just add force in the downward direction
+        this->forces[object].y = 0.0f; 
+        this->forces[object].y = -this->earthMass * this->g;
+        glm::vec2 currentVelocity = this->objects[object]->getVelocity();
+        currentVelocity.y += (this->forces[object].y / this->objects[object]->getMass()) * time.getTimeSpeed(); 
+        this->objects[object]->updateVelocity(currentVelocity);
+        glm::vec2 currentPosition = this->objects[object]->getCurrentCoordinates();
+        currentPosition.y += (currentVelocity.y * time.getTimeSpeed());
+        std::cout<<"[Info Velocity]: Current velocity of the object is: "<<currentVelocity.x<<"in x direction and "<<currentVelocity.y<<"in the y direction."<<std::endl;
+        // this->objects[object]->updatePosition(currentPosition);
+        // this->objects[object]->updateInWorldPosition(currentPosition);
+    }
+    
 }
