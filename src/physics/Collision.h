@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../core/Object.h"
+#include "../optimisation/Cells.h"
 #include <vector>
 #include <string>
 
