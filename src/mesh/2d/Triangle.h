@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <vector>
 #include <iostream>
-#include "Shader.h"
+#include "../../core/Shader.h"
 
 class Triangle {
 private:

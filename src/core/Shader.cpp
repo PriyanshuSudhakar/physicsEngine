@@ -1,4 +1,4 @@
-#include "Libs/Shader.h"
+#include "Shader.h"
 
 // namespace fs = std::filesystem;
 Shader::Shader()

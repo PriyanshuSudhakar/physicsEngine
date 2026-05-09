@@ -1,4 +1,4 @@
-#include "Libs/Clock.h"
+#include "Clock.h"
 
 Clock::Clock(float timeSpeed) {
     this->speedOfTimePerFrame = timeSpeed;

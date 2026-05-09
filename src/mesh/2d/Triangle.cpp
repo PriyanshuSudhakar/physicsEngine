@@ -1,4 +1,4 @@
-#include "Libs/Triangle.h"
+#include "Triangle.h"
 
 Triangle::Triangle(std::vector<float>& vertices, std::vector<unsigned int>& indices) {
     // 2. Allocate heap memory

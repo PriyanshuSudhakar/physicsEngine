@@ -1,4 +1,4 @@
-#include "Libs/Circle.h"
+#include "Circle.h"
 
 Circle::Circle(float x, float y, float radii, float theta)
 {
@@ -18,7 +18,7 @@ Circle::Circle(float x, float y, float radii, float theta)
     // Fill the vertices and indices
     int trianglesNeeded = ceil((2 * M_PI) / this->angle);
 
-    std::cout << trianglesNeeded << " traingles were drawn" << std::endl;
+    // std::cout << trianglesNeeded << " traingles were drawn" << std::endl;
     std::vector<float> vertices = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     for (int i = 0; i <= trianglesNeeded; i++)
     {
@@ -26,9 +26,9 @@ Circle::Circle(float x, float y, float radii, float theta)
         vertices.push_back(this->radii * glm::cos(i * this->angle));
         vertices.push_back(0.01f);
 
-        vertices.push_back(glm::sin(i * this->angle));
-        vertices.push_back(glm::cos(i * this->angle));
-        vertices.push_back(0.01f);
+        vertices.push_back(glm::sin(i));
+        vertices.push_back(glm::cos(i));
+        vertices.push_back(glm::tan(i));
     }
 
     std::vector<unsigned int> indices;
@@ -41,13 +41,14 @@ Circle::Circle(float x, float y, float radii, float theta)
     }
 
     this->triangles = new Triangle(vertices, indices);
-    this->triangles->setVertexShaderPath("../Shaders/vertexShader1.vert");
-    this->triangles->setFragmentShaderPath("../Shaders/fragmentShader1.frag");
+    std::string shaderPath = SHADER_PATH;
+    this->triangles->setVertexShaderPath(shaderPath + "vertexShader1.vert");
+    this->triangles->setFragmentShaderPath(shaderPath + "fragmentShader1.frag");
 
     this->triangles->createShaderProgram();
     this->objectID = this->triangles->getObjectID();
 
-    std::cout << "[INFO] circle object created with object ID: " << this->objectID << std::endl;
+    // std::cout << "[INFO] circle object created with object ID: " << this->objectID << std::endl;
 
     glm::mat4 trans = glm::mat4(1.0f);
     trans = glm::translate(trans, glm::vec3(x, y, 0.0f));
@@ -58,7 +59,7 @@ Circle::Circle(float x, float y, float radii, float theta)
 
 void Circle::drawCircle()
 {
-    std::cout << "[DEBUG] Drawing circle at: " << currPosition.x << ", " << currPosition.y << std::endl;
+    // std::cout << "[DEBUG] Drawing circle at: " << currPosition.x << ", " << currPosition.y << std::endl;
     glBindVertexArray(triangles->getVAO());
     triangles->useShaderProgram();
     triangles->drawTriangles();
@@ -118,5 +119,5 @@ void Circle::updateInWorldPosition(glm::vec2 currentPosition)
     // std::cout << "[DEBUG] transformLoc for object " << object << ": " << transformLoc << std::endl;
     glUseProgram(this->objectID);
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
-    std::cout << "[DEBUG] OpenGL updated" << std::endl;
+    // std::cout << "[DEBUG] OpenGL updated" << std::endl;
 }
