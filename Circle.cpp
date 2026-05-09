@@ -13,7 +13,7 @@ Circle::Circle(float x, float y, float radii, float theta)
     this->velocity.x = 0.0f;
     this->velocity.y = 0.0f;
 
-    this->mass = 5.0f;
+    this->mass = 1.0f;
 
     // Fill the vertices and indices
     int trianglesNeeded = ceil((2 * M_PI) / this->angle);
