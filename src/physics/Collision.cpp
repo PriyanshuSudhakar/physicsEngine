@@ -1,4 +1,4 @@
-#include "Libs/Collision.h"
+#include "Collision.h"
 
 Collision::Collision() {
     this->isCollisionDetectionActive = true;
