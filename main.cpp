@@ -69,22 +69,22 @@ int main()
     Gravity gravity;
     gravity.addObject(circle1);
     gravity.addObject(circle2);
-    gravity.addObject(circle3);
-    gravity.addObject(circle4);
-    gravity.addObject(circle5);
-    gravity.addObject(circle6);
-    gravity.addObject(circle7);
-    gravity.addObject(circle8);
-    gravity.addObject(circle9);
-    gravity.addObject(circle10);
-    gravity.addObject(circle11);
-    gravity.addObject(circle12);
-    gravity.addObject(circle13);
-    gravity.addObject(circle14);
-    gravity.addObject(circle15);
-    gravity.addObject(circle16);
-    gravity.addObject(circle17);
-    gravity.addObject(circle18);
+    // gravity.addObject(circle3);
+    // gravity.addObject(circle4);
+    // gravity.addObject(circle5);
+    // gravity.addObject(circle6);
+    // gravity.addObject(circle7);
+    // gravity.addObject(circle8);
+    // gravity.addObject(circle9);
+    // gravity.addObject(circle10);
+    // gravity.addObject(circle11);
+    // gravity.addObject(circle12);
+    // gravity.addObject(circle13);
+    // gravity.addObject(circle14);
+    // gravity.addObject(circle15);
+    // gravity.addObject(circle16);
+    // gravity.addObject(circle17);
+    // gravity.addObject(circle18);
 
     Collision collision;
     collision.setWallHeight(1);
@@ -92,22 +92,22 @@ int main()
 
     collision.addNonGhostObjects(circle1, "circle");
     collision.addNonGhostObjects(circle2, "circle");
-    collision.addNonGhostObjects(circle3, "circle");
-    collision.addNonGhostObjects(circle4, "circle");
-    collision.addNonGhostObjects(circle5, "circle");
-    collision.addNonGhostObjects(circle6, "circle");
-    collision.addNonGhostObjects(circle7, "circle");
-    collision.addNonGhostObjects(circle8, "circle");
-    collision.addNonGhostObjects(circle9, "circle");
-    collision.addNonGhostObjects(circle10, "circle");
-    collision.addNonGhostObjects(circle11, "circle");
-    collision.addNonGhostObjects(circle12, "circle");
-    collision.addNonGhostObjects(circle13, "circle");
-    collision.addNonGhostObjects(circle14, "circle");
-    collision.addNonGhostObjects(circle15, "circle");
-    collision.addNonGhostObjects(circle16, "circle");
-    collision.addNonGhostObjects(circle17, "circle");
-    collision.addNonGhostObjects(circle18, "circle");
+    // collision.addNonGhostObjects(circle3, "circle");
+    // collision.addNonGhostObjects(circle4, "circle");
+    // collision.addNonGhostObjects(circle5, "circle");
+    // collision.addNonGhostObjects(circle6, "circle");
+    // collision.addNonGhostObjects(circle7, "circle");
+    // collision.addNonGhostObjects(circle8, "circle");
+    // collision.addNonGhostObjects(circle9, "circle");
+    // collision.addNonGhostObjects(circle10, "circle");
+    // collision.addNonGhostObjects(circle11, "circle");
+    // collision.addNonGhostObjects(circle12, "circle");
+    // collision.addNonGhostObjects(circle13, "circle");
+    // collision.addNonGhostObjects(circle14, "circle");
+    // collision.addNonGhostObjects(circle15, "circle");
+    // collision.addNonGhostObjects(circle16, "circle");
+    // collision.addNonGhostObjects(circle17, "circle");
+    // collision.addNonGhostObjects(circle18, "circle");
 
     while (!glfwWindowShouldClose(myWindow.getWindow()))
     {
@@ -119,25 +119,45 @@ int main()
         // Drawing all circles
         circle1->drawCircle();
         circle2->drawCircle();
-        circle3->drawCircle();
-        circle4->drawCircle();
-        circle5->drawCircle();
-        circle6->drawCircle();
-        circle7->drawCircle();
-        circle8->drawCircle();
-        circle9->drawCircle();
-        circle10->drawCircle();
-        circle11->drawCircle();
-        circle12->drawCircle();
-        circle13->drawCircle();
-        circle14->drawCircle();
-        circle15->drawCircle();
-        circle16->drawCircle();
-        circle17->drawCircle();
-        circle18->drawCircle();
+        // circle3->drawCircle();
+        // circle4->drawCircle();
+        // circle5->drawCircle();
+        // circle6->drawCircle();
+        // circle7->drawCircle();
+        // circle8->drawCircle();
+        // circle9->drawCircle();
+        // circle10->drawCircle();
+        // circle11->drawCircle();
+        // circle12->drawCircle();
+        // circle13->drawCircle();
+        // circle14->drawCircle();
+        // circle15->drawCircle();
+        // circle16->drawCircle();
+        // circle17->drawCircle();
+        // circle18->drawCircle();
+
+        // update position of circles auto using the current velocity of the object
+        circle1->tick();
+        circle2->tick();
+        // circle3->tick();
+        // circle4->tick();
+        // circle5->tick();
+        // circle6->tick();
+        // circle7->tick();
+        // circle8->tick();
+        // circle9->tick();
+        // circle10->tick();
+        // circle11->tick();
+        // circle12->tick();
+        // circle13->tick();
+        // circle14->tick();
+        // circle15->tick();
+        // circle16->tick();
+        // circle17->tick();
+        // circle18->tick();
 
         gravity.gravity();
-        gravity.groundGravity();
+        // gravity.groundGravity();
 
         collision.collisionDetector();
         collision.wallCollisionDetector();
@@ -145,26 +165,26 @@ int main()
         glfwSwapBuffers(myWindow.getWindow());
     }
 
-    // Optional: Clean up memory (Standard practice)
-    delete triangle1;
+    // Optional: Clean up memory 
+    // delete triangle1;
     delete circle1;
     delete circle2;
-    delete circle3;
-    delete circle4;
-    delete circle5;
-    delete circle6;
-    delete circle7;
-    delete circle8;
-    delete circle9;
-    delete circle10;
-    delete circle11;
-    delete circle12;
-    delete circle13;
-    delete circle14;
-    delete circle15;
-    delete circle16;
-    delete circle17;
-    delete circle18;
+    // delete circle3;
+    // delete circle4;
+    // delete circle5;
+    // delete circle6;
+    // delete circle7;
+    // delete circle8;
+    // delete circle9;
+    // delete circle10;
+    // delete circle11;
+    // delete circle12;
+    // delete circle13;
+    // delete circle14;
+    // delete circle15;
+    // delete circle16;
+    // delete circle17;
+    // delete circle18;
 
     glfwTerminate();
     return 0;

@@ -90,24 +90,24 @@ void Collision::wallCollisionDetector() {
             glm::vec2 vel = this->objects[object]->getVelocity();
             vel.x = -vel.x;
             this->objects[object]->updateVelocity(vel);
-            this->objects[object]->updatePosition(glm::vec2(wallWidth - radius, curr_y));
+            // this->objects[object]->updatePosition(glm::vec2(wallWidth - radius, curr_y));
         } else if (curr_x - radius <= -wallWidth) {
             glm::vec2 vel = this->objects[object]->getVelocity();
             vel.x = -vel.x;
             this->objects[object]->updateVelocity(vel);
-            this->objects[object]->updatePosition(glm::vec2(-wallWidth + radius, curr_y));
+            // this->objects[object]->updatePosition(glm::vec2(-wallWidth + radius, curr_y));
         }
 
         if (curr_y + radius >= wallHeight) {
             glm::vec2 vel = this->objects[object]->getVelocity();
             vel.y = -vel.y;
             this->objects[object]->updateVelocity(vel);
-            this->objects[object]->updatePosition(glm::vec2(curr_x, wallHeight - radius));
+            // this->objects[object]->updatePosition(glm::vec2(curr_x, wallHeight - radius));
         } else if (curr_y - radius <= -wallHeight) {
             glm::vec2 vel = this->objects[object]->getVelocity();
             vel.y = -vel.y;
             this->objects[object]->updateVelocity(vel);
-            this->objects[object]->updatePosition(glm::vec2(curr_x, -wallHeight + radius));
+            // this->objects[object]->updatePosition(glm::vec2(curr_x, -wallHeight + radius));
         }
     }
 }
