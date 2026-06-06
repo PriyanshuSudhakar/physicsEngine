@@ -25,6 +25,7 @@ void Gravity::addObject(Circle *circle)
     tempForce.x = 0.0f;
     tempForce.y = 0.0f;
     this->forces.push_back(tempForce);
+    this->objects[this->numberOfObjects - 1]->updateForce(tempForce);
 }
 
 void Gravity::gravity()
@@ -34,8 +35,13 @@ void Gravity::gravity()
         // glm::vec2 force;
         // force.x = this->forces[currObject].x;
         // force.y = this->forces[currObject].y;
+
+        // remove later start
         this->forces[currObject].x = 0.0f;
         this->forces[currObject].y = 0.0f;
+        // remove later end
+
+        this->objects[currObject]->updateForce(glm::vec2(0.0f, 0.0f));
 
         for (int object = 0; object < this->numberOfObjects; object++)
         {
