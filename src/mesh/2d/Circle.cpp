@@ -102,8 +102,29 @@ glm::vec2 Circle::getPosition()
 
 void Circle::updatePosition(glm::vec2 position)
 {
+    // remove later start
     this->currPosition = position;
     updateInWorldPosition(position);
+    // remove later end
+}
+
+// void Circle::updatePositionAuto()
+// {
+//     float timeSpeed = 0.001f;
+//     this->currPosition.x += this->velocity.x * timeSpeed;
+//     this->currPosition.y += this->velocity.y * timeSpeed;
+//     updateInWorldPosition(this->currPosition);
+// }
+
+void Circle::updatePositionAuto()
+{
+    float timeSpeed = 0.001f;
+
+    // position uses current velocity AND current acceleration
+    this->currPosition.x += this->velocity.x * timeSpeed + 0.5f * this->acceleration.x * timeSpeed * timeSpeed;
+    this->currPosition.y += this->velocity.y * timeSpeed + 0.5f * this->acceleration.y * timeSpeed * timeSpeed;
+
+    updateInWorldPosition(this->currPosition);
 }
 
 void Circle::draw()
@@ -120,4 +141,31 @@ void Circle::updateInWorldPosition(glm::vec2 currentPosition)
     glUseProgram(this->objectID);
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
     // std::cout << "[DEBUG] OpenGL updated" << std::endl;
+}
+
+// void Circle::updateVelocityAuto()
+// {
+//     float timeSpeed = 0.001f;
+//     // Test
+//     this->velocity.x += (this->force.x / this->mass) * timeSpeed;
+//     this->velocity.y += (this->force.y / this->mass) * timeSpeed;
+// }
+
+void Circle::updateVelocityAuto()
+{
+    float timeSpeed = 0.001f;
+
+    glm::vec2 oldAccel = this->acceleration;
+    this->acceleration = this->force / this->mass;
+
+    // average old and new acceleration (Velocity Verlet)
+    this->velocity.x += 0.5f * (oldAccel.x + this->acceleration.x) * timeSpeed;
+    this->velocity.y += 0.5f * (oldAccel.y + this->acceleration.y) * timeSpeed;
+}
+
+void Circle::tick()
+{
+    updateForce();
+    updatePositionAuto();
+    updateVelocityAuto();
 }

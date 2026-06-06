@@ -25,7 +25,8 @@ void Gravity::addObject(Circle *circle)
     tempForce.x = 0.0f;
     tempForce.y = 0.0f;
     this->forces.push_back(tempForce);
-    this->objects[this->numberOfObjects - 1]->updateForce(tempForce);
+    this->objects[this->numberOfObjects - 1]->updateGravitationalForce(tempForce);
+    this->objects[this->numberOfObjects - 1]->updateGroundForce(tempForce);
 }
 
 void Gravity::gravity()
@@ -41,7 +42,7 @@ void Gravity::gravity()
         this->forces[currObject].y = 0.0f;
         // remove later end
 
-        this->objects[currObject]->updateForce(glm::vec2(0.0f, 0.0f));
+        this->objects[currObject]->updateGravitationalForce(glm::vec2(0.0f, 0.0f));
 
         for (int object = 0; object < this->numberOfObjects; object++)
         {
@@ -68,10 +69,14 @@ void Gravity::gravity()
 
             // std::cout << "[DEBUG] end" << std::endl;
 
-            float dist_x = currObject_x - object_x;
+            float dist_x = object_x - currObject_x;
             int dir_x = (currObject_x < object_x) ? 1 : -1;
-            float dist_y = currObject_y - object_y;
+            float dist_y = object_y - currObject_y;
             int dir_y = (currObject_y < object_y) ? 1 : -1;
+
+            
+
+
 
             // std::cout << "[INFO]: Horizontal distance between the objects are: " << dist_x << std::endl;
             // std::cout << "[INFO]: Vertical distance between the objects are: " << dist_y << std::endl;
@@ -84,15 +89,22 @@ void Gravity::gravity()
             // make it zero if collision detection is turned on
             float epsilon = 0.5f; // tune this value
 
+            float r2 = dist_x*dist_x + dist_y*dist_y + epsilon*epsilon; 
+            float r = sqrt(r2);
+
             // Force is towards object
-            float currForce_x = dir_x * ((currObject_mass * object_mass) / (dist_x * dist_x + epsilon));
-            float currForce_y = dir_y * ((currObject_mass * object_mass) / (dist_y * dist_y + epsilon));
+            float forceMagnitude = ((currObject_mass * object_mass) / (r2));
+
+            float currForce_x = forceMagnitude * (dist_x / r);
+            float currForce_y = forceMagnitude * (dist_y / r);
 
             // std::cout << "[INFO]: Horizontal force between the objects are: " << currForce_x << std::endl;
             // std::cout << "[INFO]: Vertical forces between the objects are: " << currForce_y << std::endl;
 
             this->forces[currObject].x += currForce_x;
             this->forces[currObject].y += currForce_y;
+
+            this->objects[currObject]->updateGravitationalForce(this->forces[currObject]);
 
             // std::cout << "[INFO]: calculated force between the objects are: " << this->forces[currObject].x << std::endl;
             // std::cout << "[INFO]: calculated force between the objects are: " << this->forces[currObject].y << std::endl;
@@ -104,37 +116,37 @@ void Gravity::gravity()
     }
 
     // std::cout << "[DEBUG:] Log before update velocity" << std::endl;
-    updateVelocity();
+    // updateVelocity();
 }
 
 void Gravity::updateVelocity()
 {
-    // std::cout << "[DEBUG:] Clock Crash test" << std::endl;
-    float timeSpeed = 0.001f;
-    Clock time = Clock(timeSpeed);
-    // std::cout << "[DEBUG:] Clock Did not crash" << std::endl;
+    // // std::cout << "[DEBUG:] Clock Crash test" << std::endl;
+    // float timeSpeed = 0.001f;
+    // Clock time = Clock(timeSpeed);
+    // // std::cout << "[DEBUG:] Clock Did not crash" << std::endl;
 
-    for (int object = 0; object < this->numberOfObjects; object++)
-    {
-        // std::cout << "[DEBUG] Updating object: " << object << std::endl;
+    // for (int object = 0; object < this->numberOfObjects; object++)
+    // {
+    //     // std::cout << "[DEBUG] Updating object: " << object << std::endl;
 
-        float acceleration_x = this->forces[object].x / this->objects[object]->getMass();
-        float acceleration_y = this->forces[object].y / this->objects[object]->getMass();
-        // std::cout << "[DEBUG] Acceleration: " << acceleration_x << ", " << acceleration_y << std::endl;
+    //     float acceleration_x = this->forces[object].x / this->objects[object]->getMass();
+    //     float acceleration_y = this->forces[object].y / this->objects[object]->getMass();
+    //     // std::cout << "[DEBUG] Acceleration: " << acceleration_x << ", " << acceleration_y << std::endl;
 
-        glm::vec2 currVelocity = this->objects[object]->getVelocity();
-        currVelocity.x += acceleration_x * time.getTimeSpeed();
-        currVelocity.y += acceleration_y * time.getTimeSpeed();
-        this->objects[object]->updateVelocity(currVelocity);
-        // std::cout << "[DEBUG] Velocity updated" << std::endl;
+    //     glm::vec2 currVelocity = this->objects[object]->getVelocity();
+    //     currVelocity.x += acceleration_x * time.getTimeSpeed();
+    //     currVelocity.y += acceleration_y * time.getTimeSpeed();
+    //     this->objects[object]->updateVelocity(currVelocity);
+    //     // std::cout << "[DEBUG] Velocity updated" << std::endl;
 
-        glm::vec2 currPosition = this->objects[object]->getPosition();
-        currPosition.x += currVelocity.x * time.getTimeSpeed();
-        currPosition.y += currVelocity.y * time.getTimeSpeed();
-        this->objects[object]->updatePosition(currPosition);
-        // std::cout << "[DEBUG] Position updated" << std::endl;
-        // std::cout << "[DEBUG] Matrix built" << std::endl;
-    }
+    //     glm::vec2 currPosition = this->objects[object]->getPosition();
+    //     currPosition.x += currVelocity.x * time.getTimeSpeed();
+    //     currPosition.y += currVelocity.y * time.getTimeSpeed();
+    //     this->objects[object]->updatePosition(currPosition);
+    //     // std::cout << "[DEBUG] Position updated" << std::endl;
+    //     // std::cout << "[DEBUG] Matrix built" << std::endl;
+    // }
 }
 
 void Gravity::groundGravity() {
@@ -143,13 +155,13 @@ void Gravity::groundGravity() {
     // std::cout<<"[Info] Number of objects: "<<this->numberOfObjects<<std::endl;
     for(int object=0;object<this->numberOfObjects;object++) {
         // just add force in the downward direction
-        this->forces[object].y = 0.0f; 
-        this->forces[object].y = -this->earthMass * this->g;
-        glm::vec2 currentVelocity = this->objects[object]->getVelocity();
-        currentVelocity.y += (this->forces[object].y / this->objects[object]->getMass()) * time.getTimeSpeed(); 
-        this->objects[object]->updateVelocity(currentVelocity);
-        glm::vec2 currentPosition = this->objects[object]->getCurrentCoordinates();
-        currentPosition.y += (currentVelocity.y * time.getTimeSpeed());
+        this->objects[object]->updateGroundForce(glm::vec2(0.0f, -this->earthMass * this->g));
+        // this->forces[object].y = -this->earthMass * this->g;
+        // glm::vec2 currentVelocity = this->objects[object]->getVelocity();
+        // currentVelocity.y += (this->forces[object].y / this->objects[object]->getMass()) * time.getTimeSpeed(); 
+        // this->objects[object]->updateVelocity(currentVelocity);
+        // glm::vec2 currentPosition = this->objects[object]->getCurrentCoordinates();
+        // currentPosition.y += (currentVelocity.y * time.getTimeSpeed());
         // std::cout<<"[Info Velocity]: Current velocity of the object is: "<<currentVelocity.x<<"in x direction and "<<currentVelocity.y<<"in the y direction."<<std::endl;
         // this->objects[object]->updatePosition(currentPosition);
         // this->objects[object]->updateInWorldPosition(currentPosition);
